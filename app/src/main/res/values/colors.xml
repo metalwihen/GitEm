@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#cccccc</color>
+
+    <color name="lightTextColor">#f4f4f4</color>
+    <color name="searchBoxBackground">#fff</color>
+</resources>

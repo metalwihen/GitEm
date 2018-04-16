@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Git \'Em</string>
+    <string name="msg_search_box_hint">Search users…</string>
+    <string name="msg_empty_list_default_text">No users found</string>
+    <string name="msg_error_list_default_text">Oops… Something went wrong!</string>
+    <string name="msg_error_list_button_text">Retry</string>
+    <string name="msg_unable_to_open_link">Unable to open link</string>
+</resources>

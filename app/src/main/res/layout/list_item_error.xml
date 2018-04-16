@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding">
+
+    <TextView
+        android:id="@+id/error_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="@string/msg_error_list_default_text"
+        android:textSize="@dimen/list_item_title_text_size" />
+
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+
+        android:textSize="@dimen/list_item_subtitle_text_size"
+        tools:text="403 Rate Limit!" />
+
+    <Button
+        android:id="@+id/retry_button"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_error_list_button_text" />
+
+</LinearLayout>
