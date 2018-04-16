@@ -1,8 +1,5 @@
 package com.metalwihen.sample.gitem.ui.search_page;
 
-import android.util.Log;
-
-import com.metalwihen.sample.gitem.core.GithubCredentials;
 import com.metalwihen.sample.gitem.net.user.User;
 import com.metalwihen.sample.gitem.ui.adapter.BaseListItem;
 import com.metalwihen.sample.gitem.ui.adapter.user_item.UserListItem;
@@ -10,6 +7,7 @@ import com.metalwihen.sample.gitem.ui.adapter.user_item.UserListItem;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -22,6 +20,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
 
     private SearchPageContract.View mView;
     private SearchPageContract.Data mData;
+    private Disposable mDisposable;
 
     private String mLastSearchedQuery;
 
@@ -38,14 +37,15 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
     @Override
     public void onClosePage() {
         mLastSearchedQuery = null;
-        // TODO: Clean up
+        cancelRequests();
     }
 
     @Override
     public void onTypeText(String searchQuery) {
         mLastSearchedQuery = searchQuery;
 
-        if (searchQuery == null || searchQuery.length() == 0) {
+        if (searchQuery == null || searchQuery.length() == 0 || searchQuery.trim().length() == 0) {
+            cancelRequests();
             mView.showBlankList();
         } else {
             loadUsers(searchQuery);
@@ -59,7 +59,9 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
 
     private void loadUsers(String query) {
         mView.showLoadingList();
-        mData.searchUsersByNameSortedByFollowersInDescendingOrder(query)
+
+        cancelRequests();
+        mDisposable = mData.searchUsersByNameSortedByFollowersInDescendingOrder(query)
                 .map(new Function<User, BaseListItem>() {
                     @Override
                     public UserListItem apply(User user) throws Exception {
@@ -85,5 +87,11 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
                         mView.showErrorList(String.valueOf(throwable.getMessage()));
                     }
                 });
+    }
+
+    private void cancelRequests() {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }
